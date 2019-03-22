@@ -23,24 +23,11 @@ class LoginForm extends Component {
            secureTextEntry={true}
            ref={(input) => this.password = input}/>
            <TouchableOpacity style={styles.signinButton}
-           underlineColorAndroid='rgba(0,0,0,0)'>
+           underlineColorAndroid='rgba(0,0,0,0)'
+           onPress={() => this.props.navigation.navigate('Home')}>
            <Text style={styles.buttonText}>{this.props.buttonText}</Text>
            </TouchableOpacity>
-           <View style={styles.registerContainer}>
-               <Text
-                style={
-                    {color: 'rgba(255, 255, 255, .7)', 
-                    marginRight: 10, fontSize: 16}}>
-                    {this.props.checkText}
-                    </Text>
-               <TouchableOpacity style={{cursor: 'pointer'}}>
-                   <Text
-                   style={
-                       {color: '#fff', 
-                       marginRight: 10, fontSize: 16}}>
-                       {this.props.checkAction}
-                    </Text></TouchableOpacity>
-           </View>
+           
       </View>
     )
   }
@@ -48,7 +35,6 @@ class LoginForm extends Component {
 
 const styles = StyleSheet.create({
     loginContainer: {
-        flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -73,10 +59,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
     },
-    registerContainer: {
-        flexDirection: 'row',
-        marginTop: 20,
-    }
 })
 
 export default LoginForm
