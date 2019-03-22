@@ -13,28 +13,32 @@ class LoginForm extends Component {
           <TextInput style={styles.InputContainer}
            placeholder='Email'
            placeholderTextColor='#fff'
-           underlineColorAndroid='rgba(0,0,0,0)'/>
+           underlineColorAndroid='rgba(0,0,0,0)'
+           keyboardType="email-address"
+           onSubmitEditing={()=> this.password.focus()}/>
            <TextInput style={styles.InputContainer}
            placeholder='password'
            placeholderTextColor='#fff'
-           underlineColorAndroid='rgba(0,0,0,0)'/>
+           underlineColorAndroid='rgba(0,0,0,0)'
+           secureTextEntry={true}
+           ref={(input) => this.password = input}/>
            <TouchableOpacity style={styles.signinButton}
            underlineColorAndroid='rgba(0,0,0,0)'>
-           <Text style={styles.buttonText}>Signin</Text>
+           <Text style={styles.buttonText}>{this.props.buttonText}</Text>
            </TouchableOpacity>
            <View style={styles.registerContainer}>
                <Text
                 style={
                     {color: 'rgba(255, 255, 255, .7)', 
                     marginRight: 10, fontSize: 16}}>
-                    have not registered yet?
+                    {this.props.checkText}
                     </Text>
-               <TouchableOpacity>
+               <TouchableOpacity style={{cursor: 'pointer'}}>
                    <Text
                    style={
                        {color: '#fff', 
                        marginRight: 10, fontSize: 16}}>
-                       Signup
+                       {this.props.checkAction}
                     </Text></TouchableOpacity>
            </View>
       </View>
