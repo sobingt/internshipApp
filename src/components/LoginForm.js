@@ -23,7 +23,6 @@ class LoginForm extends Component {
            secureTextEntry={true}
            ref={(input) => this.password = input}/>
            <TouchableOpacity style={styles.signinButton}
-           underlineColorAndroid='rgba(0,0,0,0)'
            onPress={() => this.props.navigation.navigate('Home')}>
            <Text style={styles.buttonText}>{this.props.buttonText}</Text>
            </TouchableOpacity>
@@ -54,6 +53,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         alignItems: 'center',
         marginVertical: 10,
+        overlayColor: 'rgba(0,0,0,0)'
     },
     buttonText: {
         fontSize: 18,
