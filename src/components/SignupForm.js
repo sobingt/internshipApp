@@ -6,10 +6,15 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native'; 
-class LoginForm extends Component {
+class SignupForm extends Component {
   render() {
     return (
       <View style={styles.loginContainer}>
+          <TextInput style={styles.InputContainer}
+           placeholder='username'
+           placeholderTextColor='#fff'
+           underlineColorAndroid='rgba(0,0,0,0)'
+           onSubmitEditing={()=> this.email.focus()}/>  
           <TextInput style={styles.InputContainer}
            placeholder='Email'
            placeholderTextColor='#fff'
@@ -25,7 +30,7 @@ class LoginForm extends Component {
            ref={(input) => this.password = input}/>
            <TouchableOpacity style={styles.signinButton}
            onPress={() => this.props.navigation.navigate('Home')}>
-           <Text style={styles.buttonText}>Sign In</Text>
+           <Text style={styles.buttonText}>Sign Up</Text>
            </TouchableOpacity>
            
       </View>
@@ -62,4 +67,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default LoginForm
+export default SignupForm

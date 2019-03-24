@@ -3,15 +3,17 @@ import {
   createStackNavigator,
   createAppContainer, 
   createMaterialTopTabNavigator } from "react-navigation"; 
+
 import Signin from './src/pages/Signin';
 import Signup from './src/pages/Signup';
 import HomePage from './src/pages/HomePage';
 import Profile from './src/pages/Profile';
+
 type Props = {};
 class App extends Component<Props> {
   render() {
     return (
-      <AppNavigator/>
+      <AppContainer/>
     );
   }
 }
@@ -44,6 +46,6 @@ const AppNavigator = createStackNavigator({
     }
 });
 
+const AppContainer = createAppContainer(AppNavigator);
 
-
-export default createAppContainer(AppNavigator);
+export default App;

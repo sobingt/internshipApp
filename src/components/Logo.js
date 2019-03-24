@@ -20,14 +20,14 @@ export class Logo extends Component<Props> {
 
 const styles = StyleSheet.create({
   logoContainer: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingTop: 5,
   },
   logoImage: {
-    width: 150,
-    height: 45,
-    marginVertical: 20
+    width: 100,
+    height: 30,
+    marginVertical: 5
   },
   logoText: {
     fontSize: 25,

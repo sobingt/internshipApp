@@ -8,12 +8,13 @@ import {
 import Logo from '../components/Logo';
 import LoginForm from '../components/LoginForm';
 
+import {connect} from 'react-redux';
+import {userActions} from '../actions';
+
+
 type Props = {};
 class Signin extends Component<Props> {
   render() {
-    onSignup = () => {
-      this.props.navigation.navigate('SignUp');
-    }
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#607D8B'
@@ -48,14 +49,23 @@ class Signin extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     justifyContent: 'space-around',
     backgroundColor: '#607D8B',
   },
   registerContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    
 }
 });
 
-export default Signin;
+const mapStatesToProps = state => ({
+  state
+})
+
+const mapActionsToProps = {
+  addUser: userActions
+}
+
+export default connect(mapStatesToProps, mapActionsToProps)(Signin);

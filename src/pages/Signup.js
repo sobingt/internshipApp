@@ -6,17 +6,25 @@ import {
     StatusBar,
     TouchableOpacity,} from 'react-native';
 import Logo from '../components/Logo';
-import LoginForm from '../components/LoginForm';
+import SignupForm from '../components/SignupForm';
+
+import {connect} from 'react-redux';
+import {userActions} from '../actions';
+
 
 type Props = {};
-class Signup extends Component<Props> {
+class Signup extends Component<Props>{
+  onPress = () => {
+    console.log(this.props)
+    this.props.navigation.navigate('SignIn')
+  }
   render() {
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#607D8B'
-          barStyle="light-content" />
+          barStyle="light-content"/>
         <Logo/>
-        <LoginForm buttonText="Sign Up" navigation={this.props.navigation}/>
+        <SignupForm navigation={this.props.navigation}/>
          <View style={styles.registerContainer}>
                <Text
                 style={
@@ -26,7 +34,7 @@ class Signup extends Component<Props> {
                     </Text>
                <TouchableOpacity 
                style={{cursor: 'pointer'}}
-                onPress={() => this.props.navigation.navigate('SignIn')}>
+                onPress={this.onPress}>
                    <Text
                    style={
                        {color: '#fff', 
@@ -52,4 +60,12 @@ const styles = StyleSheet.create({
 }
 });
 
-export default Signup;
+const mapStatesToProps = state => ({
+  state
+})
+
+const mapActionsToProps = {
+  addUser: userActions
+}
+
+export default connect(mapStatesToProps, mapActionsToProps)(Signup);
