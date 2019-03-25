@@ -32,7 +32,6 @@ class Signin extends Component<Props> {
                       Don't have an account yet?
                     </Text>
                <TouchableOpacity 
-               style={{cursor: 'pointer'}}
                onPress ={() => this.props.navigation.navigate('SignUp')}
                >
                    <Text

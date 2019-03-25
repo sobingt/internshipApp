@@ -14,8 +14,6 @@ class LoginForm extends Component {
            placeholder='Email'
            placeholderTextColor='#fff'
            underlineColorAndroid='rgba(0,0,0,0)'
-           keyboardType="email-address"
-           ref={(input) => this.email = input}
            onSubmitEditing={()=> this.password.focus()}/>
            <TextInput style={styles.InputContainer}
            placeholder='password'

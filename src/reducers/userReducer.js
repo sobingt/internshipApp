@@ -1,10 +1,9 @@
 import {ADD_USER} from '../actions/types';
 const initialState = {
     user: {
-        name: '',
+        username: '',
         email: '',
-        _id: '',
-        password: ''
+        _id: ''
     }
 }
 export default function(state = initialState, action){

@@ -11,12 +11,13 @@ import SignupForm from '../components/SignupForm';
 import {connect} from 'react-redux';
 import {userActions} from '../actions';
 
-
 type Props = {};
 class Signup extends Component<Props>{
-  onPress = () => {
-    console.log(this.props)
-    this.props.navigation.navigate('SignIn')
+  registerUser = (user) => {
+     console.log(user); 
+    this.props.addUser(user);
+    console.log(this.props); 
+    this.props.navigation.navigate('Home')
   }
   render() {
     return (
@@ -24,7 +25,7 @@ class Signup extends Component<Props>{
           <StatusBar backgroundColor='#607D8B'
           barStyle="light-content"/>
         <Logo/>
-        <SignupForm navigation={this.props.navigation}/>
+        <SignupForm registerUser = {this.registerUser} navigation= {this.props.navigation}/>
          <View style={styles.registerContainer}>
                <Text
                 style={
@@ -33,8 +34,7 @@ class Signup extends Component<Props>{
                       already have an account?
                     </Text>
                <TouchableOpacity 
-               style={{cursor: 'pointer'}}
-                onPress={this.onPress}>
+                onPress={() => this.props.navigation.navigate('SignIn')}>
                    <Text
                    style={
                        {color: '#fff', 
