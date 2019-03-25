@@ -6,13 +6,17 @@ import {
   StatusBar,
   Image,
   TouchableOpacity} from 'react-native';
+import axios from 'axios';  
 import Logo from '../components/Logo';
 
 type Props = {};
 class HomePage extends Component<Props> {
   render() {
     getMovieList = () => {
-      const url = "https://user-api-intern.herokuapp.com/movies"
+      const url = "https://user-api-intern.herokuapp.com/movies";
+      axios.get(url)
+      .then((response) => console.log(response.data))
+      .catch(err => console.log(err))
     }
     return (
       <View style={styles.container}>
@@ -22,7 +26,7 @@ class HomePage extends Component<Props> {
         <View style={styles.homeContainer}>
         <Text style={styles.homeHeader}>see amazing movie lists</Text>
         <Image style={styles.homeImage} source={require('../images/home.jpeg')}/>
-         <TouchableOpacity style={styles.listingButton}>
+         <TouchableOpacity style={styles.listingButton} onPress={this.getMovieList}>
             <Text style={styles.listingButtonText}>Goto movie listing</Text> 
           </TouchableOpacity> 
         </View>

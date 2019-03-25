@@ -63,7 +63,8 @@ class SignupForm extends Component {
           placeholderTextColor='#fff'
           underlineColorAndroid='transparent'
           onChangeText = {(text) => this.setState({username: text})}
-          onSubmitEditing={() => this.email.focus()}/>  
+          onSubmitEditing={() => this.email.focus()}
+          autoFocus={true}/>  
           <TextInput style={styles.InputContainer}
           placeholder='Email'
           placeholderTextColor='#fff'

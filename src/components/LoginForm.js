@@ -55,7 +55,8 @@ class LoginForm extends Component {
            placeholderTextColor='#fff'
            underlineColorAndroid='rgba(0,0,0,0)'
            onChangeText = { (text) => this.setState({email: text})}
-           onSubmitEditing={()=> this.password.focus()}/>
+           onSubmitEditing={()=> this.password.focus()}
+           autoFocus={true}/>
            <TextInput style={styles.InputContainer}
            placeholder='password'
            placeholderTextColor='#fff'
