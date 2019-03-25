@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native'; 
 import axios from 'axios';
+import RenderLoader from './RenderLoader';
 
 class SignupForm extends Component { 
   constructor(props){
@@ -30,6 +31,7 @@ class SignupForm extends Component {
       }
 
       else if(password.length < 6){
+        this.setState({isLoading: false}) 
         this.setState({error: "minimum password length should be 6"});
       }
 
@@ -47,40 +49,41 @@ class SignupForm extends Component {
         })
       }
   }
-  
   render() {
     const Error = this.state.error ? (<View>
       <Text style={styles.errorMessage}>{this.state.error}</Text>
-      </View>) : null;
+      </View>) : null;  
     return (
-      <View style={styles.loginContainer}>
-          {Error}
-          <TextInput style={styles.InputContainer}
-           placeholder='username'
-           placeholderTextColor='#fff'
-           underlineColorAndroid='rgba(0,0,0,0)'
-           onChangeText = {(text) => this.setState({username: text})}
-           onSubmitEditing={() => this.email.focus()}/>  
-          <TextInput style={styles.InputContainer}
-           placeholder='Email'
-           placeholderTextColor='#fff'
-           underlineColorAndroid='rgba(0,0,0,0)'
-           keyboardType="email-address"
-           onChangeText = {(text) => this.setState({email: text})}
-           ref={(input) => this.email = input}
-           onSubmitEditing={()=> this.password.focus()}/>
-           <TextInput style={styles.InputContainer}
-           placeholder='password'
-           placeholderTextColor='#fff'
-           underlineColorAndroid='rgba(0,0,0,0)'
-           secureTextEntry={true}
-           onChangeText = {(text) => this.setState({password: text})}
-           ref={(input) => this.password = input}/>
-           <TouchableOpacity style={styles.signinButton}
-           onPress={this.registerUser}>
-           <Text style={styles.buttonText}>Sign Up</Text>
-           </TouchableOpacity>
-           
+      <View>
+          <View style={styles.loginContainer}>
+            {Error}
+            <TextInput style={styles.InputContainer}
+            placeholder='username'
+            placeholderTextColor='#fff'
+            underlineColorAndroid='transparent'
+            onChangeText = {(text) => this.setState({username: text})}
+            onSubmitEditing={() => this.email.focus()}/>  
+            <TextInput style={styles.InputContainer}
+            placeholder='Email'
+            placeholderTextColor='#fff'
+            underlineColorAndroid='transparent'
+            keyboardType="email-address"
+            onChangeText = {(text) => this.setState({email: text})}
+            ref={(input) => this.email = input}
+            onSubmitEditing={()=> this.password.focus()}/>
+            <TextInput style={styles.InputContainer}
+            placeholder='password'
+            placeholderTextColor='#fff'
+            underlineColorAndroid='transparent'
+            secureTextEntry={true}
+            onChangeText = {(text) => this.setState({password: text})}
+            ref={(input) => this.password = input}/>
+            <TouchableOpacity style={styles.signinButton}
+            onPress={this.registerUser}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+            </TouchableOpacity>
+            <RenderLoader isLoading={this.state.isLoading}/>
+        </View>
       </View>
     )
   }
@@ -99,7 +102,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
         marginVertical: 10,
-        // overlayColor: 'transparent'
     },
     signinButton: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
