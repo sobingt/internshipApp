@@ -11,6 +11,9 @@ import Logo from '../components/Logo';
 type Props = {};
 class HomePage extends Component<Props> {
   render() {
+    getMovieList = () => {
+      const url = "https://user-api-intern.herokuapp.com/movies"
+    }
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#607D8B'
