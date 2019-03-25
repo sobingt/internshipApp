@@ -23,8 +23,14 @@ class SignupForm extends Component {
   registerUser = () => {
       this.setState({isLoading: true})
       const {username, email, password} = this.state;
-      if(password.length < 6){
-        console.log("minimum password length should be 6");
+
+      if(username.length === 0 || email.length === 0 || password.length ===0){
+        this.setState({isLoading: false})  
+        this.setState({error: 'All fields are required'}) 
+      }
+
+      else if(password.length < 6){
+        this.setState({error: "minimum password length should be 6"});
       }
 
       else if(username.length > 0 && email.length > 0 && password.length > 5)
@@ -40,16 +46,15 @@ class SignupForm extends Component {
             this.setState({error: "email should be unique and valid!"})   
         })
       }
-
-      else{
-        this.setState({isLoading: false})  
-        this.setState({error: 'All fields are required'}) 
-      }
   }
   
   render() {
+    const Error = this.state.error ? (<View>
+      <Text style={styles.errorMessage}>{this.state.error}</Text>
+      </View>) : null;
     return (
       <View style={styles.loginContainer}>
+          {Error}
           <TextInput style={styles.InputContainer}
            placeholder='username'
            placeholderTextColor='#fff'
@@ -109,6 +114,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
     },
+    errorMessage: {
+      fontSize: 18,
+      color: 'red',
+      textAlign: 'center',
+      marginVertical: 5,
+    }
 })
 
 export default SignupForm
