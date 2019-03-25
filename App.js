@@ -1,49 +1,52 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
+//task one completed
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { 
+  createStackNavigator,
+  createAppContainer, 
+  createMaterialTopTabNavigator } from "react-navigation"; 
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import Signin from './src/pages/Signin';
+import Signup from './src/pages/Signup';
+import HomePage from './src/pages/HomePage';
+import Profile from './src/pages/Profile';
 
 type Props = {};
-export default class App extends Component<Props> {
+class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <AppContainer/>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+const TabNavigator = createMaterialTopTabNavigator({
+  Home: {
+    screen: HomePage
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  Profile:{
+    screen: Profile
+  }
+})
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: TabNavigator,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  SignIn:{
+    screen: Signin,
   },
+  SignUp:{
+    screen: Signup,
+    
+  }
+},{
+  initialRouteName: "SignIn",
+  headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
 });
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default App;
