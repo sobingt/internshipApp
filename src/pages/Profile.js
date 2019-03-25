@@ -12,16 +12,18 @@ type Props = {};
 
 class Profile extends Component<Props>{
   render() {
+    const { navigation } = this.props;
+    const user = navigation.getParam('user', 'noUser');
     return (
       <View style={styles.container}>
         <Image source={require('../images/user.jpeg')} style={styles.profileImage}/>
         <View style={styles.textContainer}>
           <Text style={styles.textStyle}>username</Text>
-          <Text style={styles.textValue}>{'Ermyas'}</Text>
+          <Text style={styles.textValue}>{user.username}</Text>
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.textStyle}>Email</Text>
-          <Text style={styles.textValue}>{'ermyas@example.com'}</Text>
+          <Text style={styles.textValue}>{user.email}</Text>
         </View>
         <TouchableOpacity style={styles.editButton}
          onPress={() => this.props.navigation.navigate('SignIn')}>

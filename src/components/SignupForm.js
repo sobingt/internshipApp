@@ -16,35 +16,33 @@ class SignupForm extends Component {
             email: '',
             password: '',
             error: '',
-            loading: false,
+            isLoading: false,
       };
   }  
   
   registerUser = () => {
+      this.setState({isLoading: true})
       const {username, email, password} = this.state;
-      if(!this.state.loading) this.setState({loading: true});
       if(password.length < 6){
         console.log("minimum password length should be 6");
       }
 
-      else if(username.length > 0 && email.length > 0 && password.length > 5 && this.state.loading)
+      else if(username.length > 0 && email.length > 0 && password.length > 5)
       {
-          console.log({username, email, password});
-          const url = 'https://user-api-intern.herokuapp.com/users';
-          axios.post(url,{username, email, password})
+        const url = 'https://user-api-intern.herokuapp.com/users';
+        axios.post(url,{username, email, password})
         .then(response => {
-            this.setState({loading: false})
+            this.setState({isLoading: false})
             this.props.registerUser(response.data.user)
         })
         .catch(err =>{
-            this.setState({loading: false})
-            console.log("email should be unique and valid!")
+            this.setState({isLoading: false})
             this.setState({error: "email should be unique and valid!"})   
         })
       }
 
       else{
-        console.log("All fields are required!")  
+        this.setState({isLoading: false})  
         this.setState({error: 'All fields are required'}) 
       }
   }

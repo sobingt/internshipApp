@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity} from 'react-native';
 import Logo from '../components/Logo';
+
 type Props = {};
 class HomePage extends Component<Props> {
   render() {

@@ -13,11 +13,15 @@ import {userActions} from '../actions';
 
 type Props = {};
 class Signup extends Component<Props>{
+  constructor(props){
+    super(props);
+    this.state = {
+      user: {}
+    }
+  }
   registerUser = (user) => {
-     console.log(user); 
-    this.props.addUser(user);
-    console.log(this.props); 
-    this.props.navigation.navigate('Home')
+    this.setState({user: user})
+    this.props.navigation.navigate('Home', {user: this.state.user})
   }
   render() {
     return (
