@@ -14,6 +14,16 @@ import {userActions} from '../actions';
 
 type Props = {};
 class Signin extends Component<Props> {
+  constructor(props){
+    super(props);
+    this.state = {
+      user: {}
+    }
+  }
+  loginUser = (user) => {
+    this.setState({user: user})
+    this.props.navigation.navigate('Home', {user: this.state.user})
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -22,7 +32,7 @@ class Signin extends Component<Props> {
         <Logo/>
         <LoginForm
          buttonText="Sign In"
-         navigation={this.props.navigation}
+         loginUser = {this.loginUser}
          />
          <View style={styles.registerContainer}>
                <Text

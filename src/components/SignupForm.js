@@ -45,45 +45,45 @@ class SignupForm extends Component {
         })
         .catch(err =>{
             this.setState({isLoading: false})
-            this.setState({error: "email should be unique and valid!"})   
+            this.setState({error: "email should be unique and valid!"})
+            setTimeout(() => this.setState({error: ''}), 1000);   
         })
       }
+      setTimeout(() => this.setState({error: ''}), 1500);
   }
   render() {
     const Error = this.state.error ? (<View>
       <Text style={styles.errorMessage}>{this.state.error}</Text>
       </View>) : null;  
     return (
-      <View>
-          <View style={styles.loginContainer}>
-            {Error}
-            <TextInput style={styles.InputContainer}
-            placeholder='username'
-            placeholderTextColor='#fff'
-            underlineColorAndroid='transparent'
-            onChangeText = {(text) => this.setState({username: text})}
-            onSubmitEditing={() => this.email.focus()}/>  
-            <TextInput style={styles.InputContainer}
-            placeholder='Email'
-            placeholderTextColor='#fff'
-            underlineColorAndroid='transparent'
-            keyboardType="email-address"
-            onChangeText = {(text) => this.setState({email: text})}
-            ref={(input) => this.email = input}
-            onSubmitEditing={()=> this.password.focus()}/>
-            <TextInput style={styles.InputContainer}
-            placeholder='password'
-            placeholderTextColor='#fff'
-            underlineColorAndroid='transparent'
-            secureTextEntry={true}
-            onChangeText = {(text) => this.setState({password: text})}
-            ref={(input) => this.password = input}/>
-            <TouchableOpacity style={styles.signinButton}
-            onPress={this.registerUser}>
-            <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-            <RenderLoader isLoading={this.state.isLoading}/>
-        </View>
+        <View style={styles.loginContainer}>
+          {Error}
+          <TextInput style={styles.InputContainer}
+          placeholder='username'
+          placeholderTextColor='#fff'
+          underlineColorAndroid='transparent'
+          onChangeText = {(text) => this.setState({username: text})}
+          onSubmitEditing={() => this.email.focus()}/>  
+          <TextInput style={styles.InputContainer}
+          placeholder='Email'
+          placeholderTextColor='#fff'
+          underlineColorAndroid='transparent'
+          keyboardType="email-address"
+          onChangeText = {(text) => this.setState({email: text})}
+          ref={(input) => this.email = input}
+          onSubmitEditing={()=> this.password.focus()}/>
+          <TextInput style={styles.InputContainer}
+          placeholder='password'
+          placeholderTextColor='#fff'
+          underlineColorAndroid='transparent'
+          secureTextEntry={true}
+          onChangeText = {(text) => this.setState({password: text})}
+          ref={(input) => this.password = input}/>
+          <TouchableOpacity style={styles.signinButton}
+          onPress={this.registerUser}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+          <RenderLoader isLoading={this.state.isLoading}/>
       </View>
     )
   }
