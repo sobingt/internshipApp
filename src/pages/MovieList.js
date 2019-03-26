@@ -3,24 +3,21 @@ import{
     FlatList,
     View,
     Text,
+    Image,
     TouchableOpacity
 }from 'react-native';
-
 import {
-    ListItem,
     List
 }from 'react-native-elements';
 
 import Logo from '../components/Logo';
-
+import RenderList from '../components/RenderList';
 const renderSeparator = () => {
     return(
         <View
         style={{
             height: 1,
-            width: '80%',
             backgroundColor: '#607D8B',
-            marginLeft: '10%',
             marginVertical: 5,
         }}/>
     )
@@ -32,8 +29,6 @@ const renderHeader = () => {
         style={
             {borderBottomWidth: 1,
              borderBottomColor:'#607D8B',
-              width: '80%', marginLeft: '10%',
-               marginRight: '10%',
                marginBottom: 5}}>
             <Logo/>
         </TouchableOpacity>
@@ -48,15 +43,11 @@ class MovieList extends Component {
             <View>
                 <FlatList
                     data={movies}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity>
-                            <ListItem
-                            title={item.Title}
-                            subtitle={item.Year}
-                            leftAvatar={{ source: { uri: item.Poster } }}
-                            />
-                        </TouchableOpacity>    
-                    )}
+                    renderItem={({ item }) => {
+                        return(
+                            <RenderList item={item}/>
+                        )
+                    }}
                     keyExtractor={(item) => item._id}
                     ListHeaderComponent={renderHeader}
                     ItemSeparatorComponent={renderSeparator}/>
