@@ -15,7 +15,6 @@ type Props = {};
 
 class Profile extends Component<Props>{
   logoutUser = () => {
-    this.setState({isLoading: true})
     this.props.logoutUser()
     this.props.navigation.navigate('SignIn')
   }

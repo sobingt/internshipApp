@@ -9,6 +9,7 @@ import Signin from './src/pages/Signin';
 import Signup from './src/pages/Signup';
 import HomePage from './src/pages/HomePage';
 import Profile from './src/pages/Profile';
+import MovieList  from './src/pages/MovieList';
 
 type Props = {};
 class App extends Component<Props> {
@@ -31,21 +32,39 @@ const TabNavigator = createMaterialTopTabNavigator({
 const AppNavigator = createStackNavigator({
   Home: {
     screen: TabNavigator,
+    navigationOptions: {
+      header: null,
+    }
   },
   SignIn:{
     screen: Signin,
+    navigationOptions: {
+      header: null,
+    }
   },
   SignUp:{
     screen: Signup,
-    
+    navigationOptions: {
+      header: null,
+    }
+  },
+  MovieList: {
+    screen: MovieList,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#607D8B',
+      },
+    }
+
   }
 },{
   initialRouteName: "SignIn",
-  headerMode: 'none',
     navigationOptions: {
       headerVisible: false,
     }
 });
+
+
 
 const AppContainer = createAppContainer(AppNavigator);
 
