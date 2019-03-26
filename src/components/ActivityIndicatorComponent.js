@@ -9,7 +9,7 @@ export default function ActivityIndicatorComponent() {
   return (
     <View style={styles.mainContainer}>
       <View style={[styles.container]}>
-        <ActivityIndicator size="large" color="#0000ff"/>
+        <ActivityIndicator size="large" color="#fff"/>
       </View>
     </View>
     

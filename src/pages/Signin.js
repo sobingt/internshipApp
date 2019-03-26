@@ -14,7 +14,7 @@ type Props = {};
 class Signin extends Component<Props> {
   loginUser = (user) => {
     this.props.loginUser(user);
-    this.props.navigation.navigate('Home', {user: this.props.user});
+    this.props.navigation.navigate('Home');
   }
 
   render() {

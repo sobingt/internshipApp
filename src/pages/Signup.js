@@ -15,7 +15,7 @@ type Props = {};
 class Signup extends Component<Props>{
   registerUser = (user) => {
     this.props.registerUser(user);
-    this.props.navigation.navigate('Home', {user: this.props.user})
+    this.props.navigation.navigate('Home')
   }
   render() {
     return (

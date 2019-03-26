@@ -1,4 +1,4 @@
-import {REGISTER_USER, LOGIN_USER} from './types';
+import {REGISTER_USER, LOGIN_USER, SIGNOUT_USER} from './types';
 export const registerAction = newUser => dispatch => {
         dispatch({
             type: REGISTER_USER,
@@ -10,5 +10,12 @@ export const loginAction = user => dispatch => {
     dispatch({
         type: LOGIN_USER,
         payload: user
+    })
+}
+
+export const logoutAction = () => dispatch => {
+    dispatch({
+        type: SIGNOUT_USER,
+        payload: {}
     })
 }

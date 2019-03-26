@@ -1,10 +1,9 @@
-import {REGISTER_USER, LOGIN_USER} from '../actions/types';
+import {REGISTER_USER, LOGIN_USER, SIGNOUT_USER} from '../actions/types';
 
 const initialState = {
     user: { }
 }
 export default function(state = initialState, action){
-    console.log('from reducer!');
     switch(action.type){
         case REGISTER_USER:
             return {...state,
@@ -14,7 +13,12 @@ export default function(state = initialState, action){
         case LOGIN_USER:
             return {...state,
                 user: action.payload
-                }   
+                }
+        case SIGNOUT_USER:
+            return{
+                ...state,
+                user: action.payload
+                }           
         default:
             return state;    
     }
