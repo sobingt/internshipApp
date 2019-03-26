@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
+    Keyboard,
 } from 'react-native'; 
 import axios from 'axios';
 import RenderLoader from './RenderLoader';
@@ -24,7 +25,7 @@ class SignupForm extends Component {
   registerUser = () => {
       this.setState({isLoading: true})
       const {username, email, password} = this.state;
-
+      Keyboard.dismiss();
       if(username.length === 0 || email.length === 0 || password.length ===0){
         this.setState({isLoading: false})  
         this.setState({error: 'All fields are required'}) 
@@ -41,6 +42,7 @@ class SignupForm extends Component {
         axios.post(url,{username, email, password})
         .then(response => {
             this.setState({isLoading: false})
+            this.setState({username: '', email: '', password: ''})
             this.props.registerUser(response.data.user)
         })
         .catch(err =>{
@@ -64,6 +66,7 @@ class SignupForm extends Component {
           underlineColorAndroid='transparent'
           onChangeText = {(text) => this.setState({username: text})}
           onSubmitEditing={() => this.email.focus()}
+          value={this.state.username}
           autoFocus={true}/>  
           <TextInput style={styles.InputContainer}
           placeholder='Email'
@@ -72,14 +75,16 @@ class SignupForm extends Component {
           keyboardType="email-address"
           onChangeText = {(text) => this.setState({email: text})}
           ref={(input) => this.email = input}
-          onSubmitEditing={()=> this.password.focus()}/>
+          onSubmitEditing={()=> this.password.focus()}
+          value={this.state.email}/>
           <TextInput style={styles.InputContainer}
           placeholder='password'
           placeholderTextColor='#fff'
           underlineColorAndroid='transparent'
           secureTextEntry={true}
           onChangeText = {(text) => this.setState({password: text})}
-          ref={(input) => this.password = input}/>
+          ref={(input) => this.password = input}
+          value={this.state.password}/>
           <TouchableOpacity style={styles.signinButton}
           onPress={this.registerUser}>
           <Text style={styles.buttonText}>Sign Up</Text>

@@ -9,21 +9,14 @@ import Logo from '../components/Logo';
 import LoginForm from '../components/LoginForm';
 
 import {connect} from 'react-redux';
-import {userActions} from '../actions';
-
-
+import {loginAction} from '../actions/userActions';
 type Props = {};
 class Signin extends Component<Props> {
-  constructor(props){
-    super(props);
-    this.state = {
-      user: {}
-    }
-  }
   loginUser = (user) => {
-    this.setState({user: user})
-    this.props.navigation.navigate('Home', {user: this.state.user})
+    this.props.loginUser(user);
+    this.props.navigation.navigate('Home', {user: this.props.user});
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -70,11 +63,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStatesToProps = state => ({
-  state
+  user: state.user.user
 })
 
 const mapActionsToProps = {
-  addUser: userActions
+  loginUser: loginAction
 }
 
 export default connect(mapStatesToProps, mapActionsToProps)(Signin);

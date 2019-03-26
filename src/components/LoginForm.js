@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
+    Keyboard
 } from 'react-native'; 
 
 import axios from 'axios';
@@ -27,11 +28,13 @@ class LoginForm extends Component {
         this.setState({error: "both email and password can not be empty!"})
         }
         else{
+            Keyboard.dismiss();
             this.setState({isLoading: true})
             const url = 'https://user-api-intern.herokuapp.com/users/login';
             axios.post(url,{email, password})
             .then(response => {
                 this.setState({isLoading: false})
+                this.setState({username: '', email: '', password: ''})
                 this.props.loginUser(response.data.user)
             })
             .catch(err =>{
@@ -56,6 +59,7 @@ class LoginForm extends Component {
            underlineColorAndroid='rgba(0,0,0,0)'
            onChangeText = { (text) => this.setState({email: text})}
            onSubmitEditing={()=> this.password.focus()}
+           value={this.state.email}
            autoFocus={true}/>
            <TextInput style={styles.InputContainer}
            placeholder='password'
@@ -63,6 +67,7 @@ class LoginForm extends Component {
            underlineColorAndroid='rgba(0,0,0,0)'
            onChangeText = { (password) => this.setState({password: password})}
            secureTextEntry={true}
+           value={this.state.password}
            ref={(input) => this.password = input}/>
            <TouchableOpacity style={styles.signinButton}
            onPress={this.loginUser}>
