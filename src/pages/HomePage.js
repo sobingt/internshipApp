@@ -15,8 +15,6 @@ import {fetchMovies} from '../actions/movieActions';
 type Props = {};
 class HomePage extends Component<Props> {
   getMovieList = () => {
-    console.log(this.props)
-    console.log("fetching.....");
     const url = "https://user-api-intern.herokuapp.com/movies";
     axios.get(url)
     .then((response) => {

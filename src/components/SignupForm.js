@@ -9,7 +9,7 @@ import {
 } from 'react-native'; 
 import axios from 'axios';
 import RenderLoader from './RenderLoader';
-
+import Error from './Error';
 class SignupForm extends Component { 
   constructor(props){
       super(props);
@@ -47,19 +47,14 @@ class SignupForm extends Component {
         })
         .catch(err =>{
             this.setState({isLoading: false})
-            this.setState({error: "email should be unique and valid!"})
-            setTimeout(() => this.setState({error: ''}), 1000);   
+            this.setState({error: "email should be unique and valid!"})  
         })
       }
-      setTimeout(() => this.setState({error: ''}), 1500);
   }
-  render() {
-    const Error = this.state.error ? (<View>
-      <Text style={styles.errorMessage}>{this.state.error}</Text>
-      </View>) : null;  
+  render() { 
     return (
         <View style={styles.loginContainer}>
-          {Error}
+          <Error error={this.state.error}/>
           <TextInput style={styles.InputContainer}
           placeholder='username'
           placeholderTextColor='#fff'

@@ -10,6 +10,7 @@ import {
 
 import axios from 'axios';
 import RenderLoader from './RenderLoader';
+import Error from './Error';
 
 class LoginForm extends Component {
     constructor(props){
@@ -39,20 +40,16 @@ class LoginForm extends Component {
             })
             .catch(err =>{
                 this.setState({isLoading: false})
-                this.setState({error: "Invalid user detail please try again!"})
-                setTimeout(() => this.setState({error: ''}), 1500);   
+                this.setState({error: "Invalid user detail please try again!"})  
             })
-        }
-        setTimeout(() => this.setState({error: ''}), 1500);  
+        }  
     }    
 
   render() {
-    const Error = this.state.error ? (<View>
-        <Text style={styles.errorMessage}>{this.state.error}</Text>
-        </View>) : null; 
+    
     return (
       <View style={styles.loginContainer}>
-        {Error}
+        <Error error = {this.state.error}/>
           <TextInput style={styles.InputContainer}
            placeholder='Email'
            placeholderTextColor='#fff'
@@ -106,12 +103,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
     },
-    errorMessage: {
-        fontSize: 18,
-        color: 'red',
-        textAlign: 'center',
-        marginVertical: 5,
-      }
 })
 
 export default LoginForm
