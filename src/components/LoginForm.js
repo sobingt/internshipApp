@@ -34,7 +34,7 @@ class LoginForm extends Component {
             axios.post(url,{email, password})
             .then(response => {
                 this.setState({isLoading: false})
-                this.setState({username: '', email: '', password: ''})
+                this.setState({email: '', password: ''})
                 this.props.loginUser(response.data.user)
             })
             .catch(err =>{

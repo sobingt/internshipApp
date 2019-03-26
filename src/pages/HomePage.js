@@ -9,15 +9,23 @@ import {
 import axios from 'axios';  
 import Logo from '../components/Logo';
 
+import {connect} from 'react-redux';
+import {fetchMovies} from '../actions/movieActions';
+
 type Props = {};
 class HomePage extends Component<Props> {
+  getMovieList = () => {
+    console.log(this.props)
+    console.log("fetching.....");
+    const url = "https://user-api-intern.herokuapp.com/movies";
+    axios.get(url)
+    .then((response) => {
+      this.props.fetchMovies(response.data)
+      console.log(this.props)
+    })
+    .catch(err => console.log(err))
+  }
   render() {
-    getMovieList = () => {
-      const url = "https://user-api-intern.herokuapp.com/movies";
-      axios.get(url)
-      .then((response) => console.log(response.data))
-      .catch(err => console.log(err))
-    }
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#607D8B'
@@ -68,4 +76,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomePage;
+const mapPropsToState = state => {
+  return state;
+}
+
+export default connect(mapPropsToState, {fetchMovies})(HomePage);
