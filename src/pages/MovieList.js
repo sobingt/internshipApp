@@ -10,8 +10,12 @@ import {
     List
 }from 'react-native-elements';
 
+import {getMovie} from '../actions/movieActions';
+import {connect} from 'react-redux';
+
 import Logo from '../components/Logo';
 import RenderList from '../components/RenderList';
+
 const renderSeparator = () => {
     return(
         <View
@@ -36,6 +40,11 @@ const renderHeader = () => {
 }
 
 class MovieList extends Component {
+    navigateToDetails = (movie) => {
+        console.log(movie)
+        this.props.getMovieDetail(movie)
+        this.props.navigation.navigate('MovieDetails');
+    }
     render(){
         const { navigation } = this.props;
         const movies = navigation.getParam('movies', {});
@@ -45,7 +54,7 @@ class MovieList extends Component {
                     data={movies}
                     renderItem={({ item }) => {
                         return(
-                            <RenderList item={item}/>
+                            <RenderList item={item} navigateToDetails={this.navigateToDetails}/>
                         )
                     }}
                     keyExtractor={(item) => item._id}
@@ -56,4 +65,13 @@ class MovieList extends Component {
     }
 }
 
-export default MovieList;
+const mapStateToProps = state => ({
+    state 
+})
+
+const mapActionToProps = {
+    getMovieDetail: getMovie
+}
+
+
+export default connect(mapStateToProps, mapActionToProps)(MovieList);

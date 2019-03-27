@@ -8,50 +8,54 @@ import{
     ActivityIndicator
 }from 'react-native';
 import axios from 'axios';
-import {getMovie} from '../actions/movieActions';
-import {connect} from 'react-redux';
+import Error from './Error';
+
 class RenderList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            error: ''
         }
     }
-    getMovieDetail = () => {
+    getMovieDetail = (id) => {
+        this.setState({error: ''});
         this.setState({isLoading: true})
-        const url = `https://user-api-intern.herokuapp.com/movies/${this.props.item._id}`;
+        const url = `https://user-api-intern.herokuapp.com/movies/${id}`;
         axios.get(url)
         .then(response => {
+            this.setState({error: ''});
             this.setState({isLoading: false})
-            console.log(response.data)
-            this.props.getMovie(response.data);
+            this.props.navigateToDetails(response.data);
         })
         .catch(err=> {
-            console.log(err)
+            this.setState({error: 'Error occured please try again!'});
             this.setState({isLoading: false})
+            setTimeout(() => this.setState({error: ''}), 1500);
         })
     }
     render(){
-        console.log(this.props)
+        const error = this.state.error;
         const item = this.props.item;
         const loading = this.state.isLoading ? (
         <ActivityIndicator size="large"
          animating color="#CEDOCE"/>) : null;
         return(
         <View style={styles.container}>
-            <TouchableOpacity onPress={this.getMovieDetail}>
+            <TouchableOpacity onPress={() => this.getMovieDetail(item._id)}>
                 <Image source={{uri: item.Poster}}
                  style={styles.imageStyle}
                  />
             </TouchableOpacity>
-            <View>
+            <View style={styles.descriptionContainer}>
                 <Text style={styles.titleText}>
                     {item.Title}
                 </Text>
-                {loading}
                 <Text style={styles.releaseText}>
                     release year: {'     ' + item.Year}
                 </Text>
+                {loading}
+                <Error error={error}/>
             </View>
         </View>
         )
@@ -62,7 +66,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         padding: 2,
-        flexWrap: 'wrap'
     },
     imageContainer: {
 
@@ -71,18 +74,18 @@ const styles = StyleSheet.create({
         width: 150, 
         height: 100,
         borderRadius: 3,
-        marginRight: 10,
+        marginRight: 20,
+    },
+    descriptionContainer: {
+        flexWrap: 'wrap',
+        marginRight: 20,
     },
     titleText:{
-        marginLeft: 10,
+        
     },
     releaseText:{
-        marginLeft: 10,
+        
     }
 })
 
-const mapStateToProps = state => ({
-    state 
-})
-
-export default connect(mapStateToProps, {getMovie})(RenderList);
+export default RenderList;

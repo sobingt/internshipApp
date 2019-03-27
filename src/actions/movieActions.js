@@ -10,6 +10,6 @@ export const fetchMovies = movies => dispatch => {
 export const getMovie = movie => dispatch => {
     dispatch({
         type: GET_MOVIE,
-        payload: movies
+        payload: movie
     })
 }

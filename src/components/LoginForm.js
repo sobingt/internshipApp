@@ -25,6 +25,7 @@ class LoginForm extends Component {
     
     loginUser = () => {
         const {email, password} = this.state;
+        this.setState({error: ''});
         if(email.length === 0 || password.length === 0){
         this.setState({error: "both email and password can not be empty!"})
         }
@@ -35,7 +36,7 @@ class LoginForm extends Component {
             axios.post(url,{email, password})
             .then(response => {
                 this.setState({isLoading: false})
-                this.setState({email: '', password: ''})
+                this.setState({email: '', password: '', error: ''})
                 this.props.loginUser(response.data.user)
             })
             .catch(err =>{
@@ -46,10 +47,10 @@ class LoginForm extends Component {
     }    
 
   render() {
-    
+        const error = this.state.error;
     return (
       <View style={styles.loginContainer}>
-        <Error error = {this.state.error}/>
+        <Error error = {error}/>
           <TextInput style={styles.InputContainer}
            placeholder='Email'
            placeholderTextColor='#fff'

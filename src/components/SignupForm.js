@@ -24,6 +24,7 @@ class SignupForm extends Component {
   
   registerUser = () => {
       this.setState({isLoading: true})
+      this.setState({error: ''});
       const {username, email, password} = this.state;
       Keyboard.dismiss();
       if(username.length === 0 || email.length === 0 || password.length ===0){
@@ -42,7 +43,7 @@ class SignupForm extends Component {
         axios.post(url,{username, email, password})
         .then(response => {
             this.setState({isLoading: false})
-            this.setState({username: '', email: '', password: ''})
+            this.setState({username: '', email: '', password: '', error: ''})
             this.props.registerUser(response.data.user)
         })
         .catch(err =>{
@@ -52,9 +53,10 @@ class SignupForm extends Component {
       }
   }
   render() { 
+    const error = this.state.error;
     return (
         <View style={styles.loginContainer}>
-          <Error error={this.state.error}/>
+          <Error error={error}/>
           <TextInput style={styles.InputContainer}
           placeholder='username'
           placeholderTextColor='#fff'
@@ -111,7 +113,6 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         alignItems: 'center',
         marginVertical: 10,
-        // overlayColor: 'transparent'
     },
     buttonText: {
         fontSize: 18,
