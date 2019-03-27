@@ -10,6 +10,9 @@ import Signup from './src/pages/Signup';
 import HomePage from './src/pages/HomePage';
 import Profile from './src/pages/Profile';
 import MovieList  from './src/pages/MovieList';
+import MovieDetails from './src/pages/MovieDetails';
+
+import {Icon} from 'react-native-elements';
 
 type Props = {};
 class App extends Component<Props> {
@@ -22,7 +25,7 @@ class App extends Component<Props> {
 
 const TabNavigator = createMaterialTopTabNavigator({
   Home: {
-    screen: HomePage
+    screen: HomePage,
   },
   Profile:{
     screen: Profile
@@ -55,7 +58,12 @@ const AppNavigator = createStackNavigator({
         backgroundColor: '#607D8B',
       },
     }
-
+  },
+  MovieDetails: {
+    screen: MovieDetails,
+    navigationOptions: {
+      header: null,
+    }
   }
 },{
   initialRouteName: "SignIn",
