@@ -9,19 +9,13 @@ import Logo from '../components/Logo';
 import SignupForm from '../components/SignupForm';
 
 import {connect} from 'react-redux';
-import {userActions} from '../actions';
+import {registerAction} from '../actions/userActions';
 
 type Props = {};
 class Signup extends Component<Props>{
-  constructor(props){
-    super(props);
-    this.state = {
-      user: {}
-    }
-  }
   registerUser = (user) => {
-    this.setState({user: user})
-    this.props.navigation.navigate('Home', {user: this.state.user})
+    this.props.registerUser(user);
+    this.props.navigation.navigate('Home')
   }
   render() {
     return (
@@ -29,7 +23,7 @@ class Signup extends Component<Props>{
           <StatusBar backgroundColor='#607D8B'
           barStyle="light-content"/>
         <Logo/>
-        <SignupForm registerUser = {this.registerUser} navigation= {this.props.navigation}/>
+        <SignupForm registerUser = {this.registerUser}/>
          <View style={styles.registerContainer}>
                <Text
                 style={
@@ -65,11 +59,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStatesToProps = state => ({
-  state
+  user: state.user.user
 })
 
 const mapActionsToProps = {
-  addUser: userActions
+  registerUser: registerAction
 }
 
 export default connect(mapStatesToProps, mapActionsToProps)(Signup);
