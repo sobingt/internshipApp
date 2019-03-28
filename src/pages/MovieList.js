@@ -33,7 +33,9 @@ const renderHeader = () => {
         style={
             {borderBottomWidth: 1,
              borderBottomColor:'#607D8B',
-               marginBottom: 5}}>
+             paddingVertical: 20,
+             marginBottom: 10
+               }}>
             <Logo/>
         </TouchableOpacity>
     )

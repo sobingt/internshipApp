@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity
 }from 'react-native';
 
+import Logo from '../components/Logo';
 import {Card, Button, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 
@@ -13,6 +15,7 @@ export class MovieDetails extends Component {
       const {movie} = this.props;
     return (
       <View style={styles.container}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}><Logo/></TouchableOpacity>
         <View>
             <Card containerStyle={{borderWidth: 0}}
                 title={movie.Title}

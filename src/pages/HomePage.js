@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text, 
   View, 
-  StatusBar,
   Image,
   TouchableOpacity} from 'react-native';
 import axios from 'axios';  
@@ -42,8 +41,6 @@ class HomePage extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#607D8B'
-          barStyle="light-content" />
         <Logo/>
         <Error error={this.state.error}/>
         <View style={styles.homeContainer}>

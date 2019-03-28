@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   Text, 
-  View, 
-  StatusBar,
+  View,
   TouchableOpacity,} from 'react-native';
 import Logo from '../components/Logo';
 import LoginForm from '../components/LoginForm';
@@ -20,8 +19,6 @@ class Signin extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#607D8B'
-          barStyle="light-content" />
         <Logo/>
         <LoginForm
          buttonText="Sign In"
