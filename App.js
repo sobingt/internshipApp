@@ -11,6 +11,7 @@ import HomePage from './src/pages/HomePage';
 import Profile from './src/pages/Profile';
 import MovieList  from './src/pages/MovieList';
 import MovieDetails from './src/pages/MovieDetails';
+import AddMovieList from './src/pages/AddMovieList';
 
 import {Icon} from 'react-native-elements';
 
@@ -64,7 +65,10 @@ const AppNavigator = createStackNavigator({
     navigationOptions: {
       header: null,
     }
-  }
+  },
+  AddMovieList: {
+    screen: AddMovieList
+  },
 },{
   initialRouteName: "SignIn",
     navigationOptions: {
