@@ -64,7 +64,8 @@ class MovieList extends Component {
                     }}
                     keyExtractor={(item) => item._id}
                     ListHeaderComponent={renderHeader}
-                    ItemSeparatorComponent={renderSeparator}/>
+                    ItemSeparatorComponent={renderSeparator}
+                    style={{marginBottom: 30}}/>
                 <View style={styles.BottonContainer}>
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate('AddMovieList')}>
                         <Icon name="plus" color='#fff' size={30}/>
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 15,
         width: '100%',
-        backgroundColor: '#4a26fd',
+        backgroundColor: '#e54304',
     },
     ButtonText:{
         fontSize: 22,
