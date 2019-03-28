@@ -4,11 +4,14 @@ import{
     View,
     Text,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    StyleSheet
 }from 'react-native';
 import {
-    List
+    List,
+    Button
 }from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {getMovie} from '../actions/movieActions';
 import {connect} from 'react-redux';
@@ -62,10 +65,38 @@ class MovieList extends Component {
                     keyExtractor={(item) => item._id}
                     ListHeaderComponent={renderHeader}
                     ItemSeparatorComponent={renderSeparator}/>
+                <View style={styles.BottonContainer}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('AddMovieList')}>
+                        <Icon name="plus" color='#fff' size={30}/>
+                    </TouchableOpacity>
+                    <Text style={styles.ButtonText}>Add Movie List</Text>
+                </View>    
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    BottonContainer:{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        alignItems: 'center',
+        flex: 1,
+        flexDirection:'row',
+        justifyContent: 'space-around',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        width: '100%',
+        backgroundColor: '#4a26fd',
+    },
+    ButtonText:{
+        fontSize: 22,
+        color: '#fff',
+        marginHorizontal: 20
+    }
+
+})
 
 const mapStateToProps = state => ({
     state 

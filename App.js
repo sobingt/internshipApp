@@ -67,7 +67,12 @@ const AppNavigator = createStackNavigator({
     }
   },
   AddMovieList: {
-    screen: AddMovieList
+    screen: AddMovieList,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#607D8B',
+      },
+    }
   },
 },{
   initialRouteName: "SignIn",
