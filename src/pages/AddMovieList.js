@@ -6,11 +6,28 @@ import {
     Image,
     TouchableOpacity,
     StyleSheet,
-    TextInput
+    TextInput,
+    Platform
 }from 'react-native'
 
 import ImagePicker from 'react-native-image-picker'
 import Logo from '../components/Logo'
+
+const createFormData = (photo, body) => {
+  const data = new FormData();
+
+  data.append("Poster", {
+    name: photo.fileName,
+    type: photo.type,
+    path: photo.path,
+    uri: Platform.OS === "android"? photo.uri : photo.uri.replace("file://", "")
+  });
+
+  Object.keys(body).forEach(key => {
+    data.append(key, body[key]);
+  });
+  return data;
+}
 
 export class AddMovieList extends Component {
   constructor(props){
@@ -28,11 +45,16 @@ export class AddMovieList extends Component {
       noData: true,
     }
     ImagePicker.launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
           this.setState({
             photo: response,
           });
     })
+  }
+
+  addNewList = () => {
+    const {Title, Year, Type, photo} = this.state;
+    const body = {Title, Year, Type};
+    console.log(createFormData(photo, body));
   }
 
   render() {
@@ -70,7 +92,7 @@ export class AddMovieList extends Component {
               <TouchableOpacity style={styles.submitButton} onPress={this.choosePhoto}>
                 <Text style={styles.buttonText}>Select Poster</Text>
               </TouchableOpacity>  
-              <TouchableOpacity style={styles.submitButton} >
+              <TouchableOpacity style={styles.submitButton} onPress={this.addNewList} >
                 <Text style={styles.buttonText}>Add Movie</Text>
               </TouchableOpacity>
           </View>
