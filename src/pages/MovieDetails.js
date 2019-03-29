@@ -6,12 +6,31 @@ import {
     TouchableOpacity,
     Image
 }from 'react-native';
+import axios from 'axios';
 
 import Logo from '../components/Logo';
 import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 
 export class MovieDetails extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            comments: []
+        }
+    }
+    getComments = () => {
+        const { movie } = this.props;
+        const id = movie._id;
+        const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
+        axios.get(url)
+        .then(response => {
+            this.setState({comments: response.data})
+            this.props.navigation.navigate('Comments', {comments : this.state.comments, id: id})
+        })
+        .catch(err => console.log(err));
+        }
+
   render() {
       const {movie} = this.props;
     return (
@@ -24,7 +43,7 @@ export class MovieDetails extends Component {
         <View style={styles.content}>
             <Image source={{uri: movie.Poster}} style={styles.contentImage}/>
             <Text style={styles.contentTitle}>{movie.Title}</Text>
-            <Text style={styles.contentRelease}>Released in {' '+movie.Year}</Text>
+            <Text style={styles.contentRelease}>Released in {' '+ movie.Year}</Text>
         </View>
         <View style={styles.footer}>
             <View style={styles.reactionCount}>
@@ -43,7 +62,7 @@ export class MovieDetails extends Component {
                     like
                 </Text>
                 <TouchableOpacity style={{marginRight: 10}}
-                 onPress={() => this.props.navigation.navigate('Comments')}>
+                 onPress={() => this.props.navigation.navigate('Comments', {id: movie._id})}>
                     <Icon name='comment' type='octicon' color='#fff'/>
                 </TouchableOpacity>
                 <Text style={styles.addReactionText}>

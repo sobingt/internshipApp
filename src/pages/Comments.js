@@ -4,52 +4,69 @@ import{
     View,
     StyleSheet,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    FlatList
 }from 'react-native'
-
+import {connect} from 'react-redux';
+import axios from 'axios';
 import {Icon} from 'react-native-elements';
+import CommentItem from '../components/CommentItem';
 
  class Comments extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            text: '',
+            comments: []
+        }
+    }    
+        addComment = () => {
+            console.log('pressed')
+            const {navigation} = this.props;
+            const id = navigation.getParam('id', [])
+            const username = this.props.user.username;
+            const comment = {text: this.state.text, postedBy: username}
+            const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
+            axios.post(url, comment)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(err => console.log(err));
+        }
+        componentDidMount = () => {
+            const {navigation} = this.props;
+            const id = navigation.getParam('id', '');
+            const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
+            axios.get(url)
+            .then(response => {
+                this.setState({comments: response.data})
+            })
+            .catch(err => console.log(err));
+        }        
   render() {
+      const comments = this.state.comments;
     return (
      <View style={styles.container}>
          <View style={StyleSheet.header}>
 
          </View>
-         <View style={styles.content}>
-            <View style={styles.contentItem}>
-                <View style={styles.contentItemText}>
-                    <Text style={{fontSize: 18, fontWeight: '600', color: '#000'}}>
-                        Ermyas
-                    </Text>
-                    <Text style={{fontSize: 18, fontWeight: '300', color: '#000'}}>
-                        this is awesome content bro
-                    </Text>
-                </View>
-                <Text style={
-                    {textAlign:'right', marginRight: 20, fontSize: 16, color: '#000'}}>
-                    Like</Text>
-            </View>
-            <View style={styles.contentItem}>
-                <View style={styles.contentItemText}>
-                    <Text style={{fontSize: 18, fontWeight: '600', color: '#000'}}>
-                        Ermyas
-                    </Text>
-                    <Text style={{fontSize: 18, fontWeight: '300', color: '#000'}}>
-                        this is awesome content bro
-                    </Text>
-                </View>
-                <Text style={
-                    {textAlign:'right', marginRight: 20, fontSize: 16, color: '#000'}}>
-                    Like</Text>
-            </View> 
-         </View>
+         <FlatList style={styles.content}
+            data={comments}
+            renderItem={({item}) => {
+                return(
+                    <CommentItem comment={item}/>
+                )    
+            }}
+            keyExtractor = { (item) => key = item._id}
+         />
+
          <View style={styles.footer}>
              <TouchableOpacity style={{marginRight: 10}}>
                 <Icon name='camera' type='ionicons' color='#000'/>
              </TouchableOpacity>
-             <TextInput style={styles.commentBox}/>
-             <TouchableOpacity>
+             <TextInput style={styles.commentBox}
+              onChangeText={(text) => this.setState({text})}/>
+             <TouchableOpacity onPress={this.addComment}>
              <Icon name='send' type='ionicons' color='#000'/>    
              </TouchableOpacity>
          </View>
@@ -69,16 +86,6 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 20,
-    },
-    contentItem: {
-        padding: 10,
-        marginBottom: 10
-    },
-    contentItemText: {
-        padding: 10,
-        backgroundColor: '#eee',
-        borderRadius: 10,
-        marginBottom: 3
     },
     footer: {
         borderTopWidth: 1,
@@ -100,4 +107,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Comments
+const mapStatesToProps = state => ({
+    user: state.user.user
+  })
+export default connect(mapStatesToProps)(Comments);
