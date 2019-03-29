@@ -42,7 +42,8 @@ export class MovieDetails extends Component {
                 <Text style={styles.addReactionText}>
                     like
                 </Text>
-                <TouchableOpacity style={{marginRight: 10}}>
+                <TouchableOpacity style={{marginRight: 10}}
+                 onPress={() => this.props.navigation.navigate('Comments')}>
                     <Icon name='comment' type='octicon' color='#fff'/>
                 </TouchableOpacity>
                 <Text style={styles.addReactionText}>

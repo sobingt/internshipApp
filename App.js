@@ -12,6 +12,7 @@ import Profile from './src/pages/Profile';
 import MovieList  from './src/pages/MovieList';
 import MovieDetails from './src/pages/MovieDetails';
 import AddMovieList from './src/pages/AddMovieList';
+import Comments from './src/pages/Comments';
 
 import {Icon} from 'react-native-elements';
 
@@ -74,6 +75,13 @@ const AppNavigator = createStackNavigator({
       },
     }
   },
+  Comments: {
+    screen: Comments,
+    navigationOptions: {
+      header: null,
+    }
+  }
+
 },{
   initialRouteName: "SignIn",
     navigationOptions: {
