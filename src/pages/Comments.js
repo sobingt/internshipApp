@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import{
     Text,
     View,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity,
+    TextInput
 }from 'react-native'
+
+import {Icon} from 'react-native-elements';
+
  class Comments extends Component {
   render() {
     return (
-     <View>
+     <View style={styles.container}>
          <View style={StyleSheet.header}>
 
          </View>
@@ -39,8 +44,14 @@ import{
                     Like</Text>
             </View> 
          </View>
-         <View styles={styles.footer}>
-             
+         <View style={styles.footer}>
+             <TouchableOpacity style={{marginRight: 10}}>
+                <Icon name='camera' type='ionicons' color='#000'/>
+             </TouchableOpacity>
+             <TextInput style={styles.commentBox}/>
+             <TouchableOpacity>
+             <Icon name='send' type='ionicons' color='#000'/>    
+             </TouchableOpacity>
          </View>
      </View> 
     )
@@ -48,9 +59,12 @@ import{
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
     header: {
         borderBottomWidth: 1,
-        borderBottomColor: '#999',
+        borderBottomColor: '#777',
         marginBottom: 10,
     },
     content: {
@@ -67,7 +81,22 @@ const styles = StyleSheet.create({
         marginBottom: 3
     },
     footer: {
-
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+    },
+    commentBox: {
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        paddingHorizontal: 30,
+        flex: 1,
+        borderRadius: 25,
+        marginRight: -30
     }
 })
 
