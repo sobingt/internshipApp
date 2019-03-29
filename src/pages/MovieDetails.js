@@ -3,11 +3,12 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 }from 'react-native';
 
 import Logo from '../components/Logo';
-import {Card, Button, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 
 export class MovieDetails extends Component {
@@ -15,34 +16,40 @@ export class MovieDetails extends Component {
       const {movie} = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}><Logo/></TouchableOpacity>
-        <View>
-            <Card containerStyle={{borderWidth: 0}}
-                title={movie.Title}
-                image={{uri: movie.Poster}} imageStyle={{height: 350}}>
-                <Text style={{marginBottom: 10}}>
-                    {movie.Title} is released in {movie.Year}
-                </Text>
-                <View style={styles.reactionContainer}>
-                    <View style={styles.likeContainer}>
-                        <Icon name="like2" type="antdesign"/>
-                        <Text> Like</Text>
-                    </View>
-
-                    <View style={styles.commentContainer}>
-                        <Icon name="comment"/>
-                        <Text>Comment</Text>
-                    </View>
-                </View>
-                <Button
-                    backgroundColor='#607D8B'
-                    buttonStyle={{borderRadius: 5, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='MovieListing' onPress={ () => this.props.navigation.navigate('MovieList')}/>
-            </Card>
+        <View style={styles.header}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+                <Logo/>
+            </TouchableOpacity>
         </View>
-            <Text style={{fontSize: 20, color: '#607D8B', textAlign: 'center', marginTop: 20}}>
-                Comments
-            </Text>    
+        <View style={styles.content}>
+            <Image source={{uri: movie.Poster}} style={styles.contentImage}/>
+            <Text style={styles.contentTitle}>{movie.Title}</Text>
+            <Text style={styles.contentRelease}>Released in {' '+movie.Year}</Text>
+        </View>
+        <View style={styles.footer}>
+            <View style={styles.reactionCount}>
+                <Text style={styles.reactionText}>
+                    likes
+                </Text>
+                <Text style={styles.reactionText}>
+                    comments
+                </Text>
+            </View>
+            <View style={styles.addReaction}>
+                <TouchableOpacity style={{marginRight: 10}}>
+                    <Icon name='thumbsup' type='octicon' color='#fff'/>
+                </TouchableOpacity>
+                <Text style={styles.addReactionText}>
+                    like
+                </Text>
+                <TouchableOpacity style={{marginRight: 10}}>
+                    <Icon name='comment' type='octicon' color='#fff'/>
+                </TouchableOpacity>
+                <Text style={styles.addReactionText}>
+                    comment
+                </Text>
+            </View>
+        </View>    
       </View>
 
     )
@@ -52,14 +59,57 @@ export class MovieDetails extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#607D8B'
     },
-    reactionContainer: {
+    footer: {
+
+    },
+    content: {
+
+    },
+    contentImage: {
+        width: '100%',
+        height: 500
+    },
+    contentTitle:{
+        fontSize: 21,
+        margin: 20,
+        color: '#fff'
+    },
+    contentRelease: {
+        fontSize: 18,
+        color: '#fff',
+        marginLeft: 20,
+    },
+    footer: {
+        marginTop: 20,
+        borderTopWidth: .5,
+        borderTopColor: '#fff'
+    },
+    reactionCount: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingLeft: 20,
+        paddingTop: 10,
+        paddingBottom: 15,
+        borderBottomWidth: 1.5,
+        borderBottomColor: '#fff',
     },
+    reactionText: {
+        fontSize: 16,
+        color: '#fff',
+        marginRight: 20
+    },
+    addReaction: {
+        flexDirection: 'row',
+        paddingLeft: 20,
+        paddingTop: 10,
+        alignItems: 'center',
+    },
+    addReactionText: {
+        fontSize: 16,
+        color:'#fff',
+        marginRight: 100,
+    }
 })
 
 const mapPropsToState = state => ({
