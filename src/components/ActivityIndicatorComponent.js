@@ -8,8 +8,8 @@ import {
 export default function ActivityIndicatorComponent() {
   return (
     <View style={styles.mainContainer}>
-      <View style={[styles.container]}>
-        <ActivityIndicator size="large" color="#0000ff"/>
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#CEDOCE" animating />
       </View>
     </View>
     
