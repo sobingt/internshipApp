@@ -66,7 +66,7 @@ class MovieList extends Component {
                     ItemSeparatorComponent={renderSeparator}
                     style={{marginBottom: 30}}/>
                 <View style={styles.BottonContainer}>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('AddMovieList')}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('AddMovieList', {navigateToDetails: this.navigateToDetails})}>
                         <Icon name="plus" color='#fff' size={30}/>
                     </TouchableOpacity>
                     <Text style={styles.ButtonText}>Add Movie List</Text>

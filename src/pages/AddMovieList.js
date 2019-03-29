@@ -16,8 +16,6 @@ import Logo from '../components/Logo'
 import RenderLoader from '../components/RenderLoader';
 import Error from '../components/Error';
 
-import {getMovie} from '../actions/movieActions';
-import {connect} from 'react-redux';
 
 const createFormData = (Poster, body) => {
   const data = new FormData();
@@ -52,7 +50,6 @@ export class AddMovieList extends Component {
       noData: true,
     }
     ImagePicker.launchImageLibrary(options, (response) => {
-      const source = { uri: 'data:image/jpeg;base64,' + response.data};
           this.setState({
             Poster: response,
           });
@@ -72,6 +69,8 @@ export class AddMovieList extends Component {
     }
     else{
       Keyboard.dismiss();
+      const { navigation } = this.props;
+      const navigateToDetails = navigation.getParam('navigateToDetails', () => console.log('no data'));
       const bodyWithPhoto = createFormData(Poster, body);
       const url = "https://user-api-intern.herokuapp.com/movies";
       fetch(url, {
@@ -82,7 +81,7 @@ export class AddMovieList extends Component {
         .then(movie => {
           this.setState({error: ''});
           this.setState({isLoading: false});
-          this.props.navigation.navigate('Home');
+          navigateToDetails(movie)
         })
         .catch(err=> {
             this.setState({error: 'Error ocurred while adding the list please try again!'});
@@ -173,12 +172,4 @@ const styles = StyleSheet.create({
 })
 
 
-const mapStateToProps = state => ({
-  state 
-})
-
-const mapActionToProps = {
-  getMovieDetail: getMovie
-}
-
-export default connect(mapStateToProps, mapActionToProps)(AddMovieList);
+export default AddMovieList;
