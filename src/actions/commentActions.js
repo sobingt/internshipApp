@@ -1,4 +1,4 @@
-import {FETCH_COMMENTS, ADD_COMMENT} from './types';
+import {FETCH_COMMENTS, ADD_COMMENT, CLEAR_COMMENT} from './types';
 import axios from 'axios';
 export const getComments = id => dispatch => {
     const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
@@ -23,4 +23,10 @@ export const AddComment = commentAndId => dispatch => {
         })
     })
     .catch(err => console.log(err));
+}
+
+export const clearComments = () => dispatch => {
+    dispatch({
+        type: CLEAR_COMMENT
+    })
 }

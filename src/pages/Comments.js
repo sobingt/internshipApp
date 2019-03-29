@@ -12,7 +12,7 @@ import {Icon} from 'react-native-elements';
 import CommentItem from '../components/CommentItem';
 
 import {connect} from 'react-redux';
-import {AddComment, getComments} from '../actions/commentActions';
+import {AddComment, getComments, clearComments} from '../actions/commentActions';
  class Comments extends Component {
     constructor(props){
         super(props);
@@ -36,12 +36,10 @@ import {AddComment, getComments} from '../actions/commentActions';
             const id = navigation.getParam('id', '');
             this.props.getComments(id);
         }
-        
-        // componentDidUpdate = () => {
-        //     const {navigation} = this.props;
-        //     const id = navigation.getParam('id', '');
-        //     this.props.getComments(id);
-        // }
+
+        componentWillUnmount = () => {
+            this.props.clearComments();
+        }
   render() {
       const {comments} = this.props;
     return (
@@ -114,4 +112,4 @@ const mapStatesToProps = state => ({
     user: state.user.user,
     comments: state.comment.comments
   })
-export default connect(mapStatesToProps, {AddComment, getComments})(Comments);
+export default connect(mapStatesToProps, {AddComment, getComments, clearComments})(Comments);
