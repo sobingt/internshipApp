@@ -6,31 +6,11 @@ import {
     TouchableOpacity,
     Image
 }from 'react-native';
-import axios from 'axios';
 
 import Logo from '../components/Logo';
 import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
-
 export class MovieDetails extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            comments: []
-        }
-    }
-    getComments = () => {
-        const { movie } = this.props;
-        const id = movie._id;
-        const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
-        axios.get(url)
-        .then(response => {
-            this.setState({comments: response.data})
-            this.props.navigation.navigate('Comments', {comments : this.state.comments, id: id})
-        })
-        .catch(err => console.log(err));
-        }
-
   render() {
       const {movie} = this.props;
     return (
@@ -135,5 +115,5 @@ const styles = StyleSheet.create({
 const mapPropsToState = state => ({
     movie: state.movie.movie
   })
-
+  
 export default connect(mapPropsToState)(MovieDetails);

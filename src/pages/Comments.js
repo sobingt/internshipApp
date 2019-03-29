@@ -5,46 +5,45 @@ import{
     StyleSheet,
     TouchableOpacity,
     TextInput,
-    FlatList
+    FlatList,
+    Keyboard
 }from 'react-native'
-import {connect} from 'react-redux';
-import axios from 'axios';
 import {Icon} from 'react-native-elements';
 import CommentItem from '../components/CommentItem';
 
+import {connect} from 'react-redux';
+import {AddComment, getComments} from '../actions/commentActions';
  class Comments extends Component {
     constructor(props){
         super(props);
         this.state = {
             text: '',
-            comments: []
         }
     }    
         addComment = () => {
-            console.log('pressed')
-            const {navigation} = this.props;
-            const id = navigation.getParam('id', [])
-            const username = this.props.user.username;
-            const comment = {text: this.state.text, postedBy: username}
-            const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
-            axios.post(url, comment)
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(err => console.log(err));
+            if(this.state.text){
+                this.setState({text: ''})
+                Keyboard.dismiss();
+                const {navigation} = this.props;
+                const id = navigation.getParam('id', [])
+                const username = this.props.user.username;
+                const comment = {text: this.state.text, postedBy: username}
+                this.props.AddComment({comment, id});
+            }
         }
         componentDidMount = () => {
             const {navigation} = this.props;
             const id = navigation.getParam('id', '');
-            const url = `https://user-api-intern.herokuapp.com/movies/${id}/comments`
-            axios.get(url)
-            .then(response => {
-                this.setState({comments: response.data})
-            })
-            .catch(err => console.log(err));
-        }        
+            this.props.getComments(id);
+        }
+        
+        // componentDidUpdate = () => {
+        //     const {navigation} = this.props;
+        //     const id = navigation.getParam('id', '');
+        //     this.props.getComments(id);
+        // }
   render() {
-      const comments = this.state.comments;
+      const {comments} = this.props;
     return (
      <View style={styles.container}>
          <View style={StyleSheet.header}>
@@ -65,7 +64,8 @@ import CommentItem from '../components/CommentItem';
                 <Icon name='camera' type='ionicons' color='#000'/>
              </TouchableOpacity>
              <TextInput style={styles.commentBox}
-              onChangeText={(text) => this.setState({text})}/>
+              onChangeText={(text) => this.setState({text})}
+              value={this.state.text}/>
              <TouchableOpacity onPress={this.addComment}>
              <Icon name='send' type='ionicons' color='#000'/>    
              </TouchableOpacity>
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 20,
+        marginBottom: 40,
     },
     footer: {
         borderTopWidth: 1,
@@ -97,6 +98,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 5,
         paddingHorizontal: 15,
+        zIndex: 10,
+        backgroundColor: '#fff',
     },
     commentBox: {
         backgroundColor: 'rgba(0, 0, 0, 0.1)',
@@ -108,6 +111,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStatesToProps = state => ({
-    user: state.user.user
+    user: state.user.user,
+    comments: state.comment.comments
   })
-export default connect(mapStatesToProps)(Comments);
+export default connect(mapStatesToProps, {AddComment, getComments})(Comments);

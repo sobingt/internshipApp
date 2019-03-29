@@ -3,3 +3,5 @@ export const LOGIN_USER = 'login_user';
 export const SIGNOUT_USER = 'logout_user';
 export const FETCH_MOVIES = 'fetch_movies';
 export const GET_MOVIE = 'get_movie';
+export const FETCH_COMMENTS = 'fetch_comments';
+export const ADD_COMMENT = 'add_comment';
