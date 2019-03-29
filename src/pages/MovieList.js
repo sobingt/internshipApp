@@ -46,7 +46,6 @@ const renderHeader = () => {
 
 class MovieList extends Component {
     navigateToDetails = (movie) => {
-        console.log(movie)
         this.props.getMovieDetail(movie)
         this.props.navigation.navigate('MovieDetails');
     }

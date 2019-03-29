@@ -7,20 +7,25 @@ import {
     TouchableOpacity,
     StyleSheet,
     TextInput,
-    Platform
+    Keyboard
 }from 'react-native'
 
 import ImagePicker from 'react-native-image-picker'
-import Logo from '../components/Logo'
 
-const createFormData = (photo, body) => {
+import Logo from '../components/Logo'
+import RenderLoader from '../components/RenderLoader';
+import Error from '../components/Error';
+
+import {getMovie} from '../actions/movieActions';
+import {connect} from 'react-redux';
+
+const createFormData = (Poster, body) => {
   const data = new FormData();
 
-  data.append("Poster", {
-    name: photo.fileName,
-    type: photo.type,
-    path: photo.path,
-    uri: Platform.OS === "android"? photo.uri : photo.uri.replace("file://", "")
+  data.append("image", {
+    name: Poster.fileName,
+    type: Poster.type,
+    uri: Poster.uri
   });
 
   Object.keys(body).forEach(key => {
@@ -33,10 +38,12 @@ export class AddMovieList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      photo: null,
+      Poster: null,
       Title: '',
       Year: '',
-      Type: ''
+      Type: '',
+      error: '',
+      isLoading: false,
     }
   }
 
@@ -45,26 +52,56 @@ export class AddMovieList extends Component {
       noData: true,
     }
     ImagePicker.launchImageLibrary(options, (response) => {
+      const source = { uri: 'data:image/jpeg;base64,' + response.data};
           this.setState({
-            photo: response,
+            Poster: response,
           });
     })
   }
 
   addNewList = () => {
-    const {Title, Year, Type, photo} = this.state;
+    this.setState({isLoading: true});
+    this.setState({error: ''});
+    const {Title, Year, Type, Poster} = this.state;
     const body = {Title, Year, Type};
-    console.log(createFormData(photo, body));
+
+    //validate form data
+    if(!Title || !Year || !Type || !Poster){
+      this.setState({error: 'All Fields are required!'});
+      this.setState({isLoading: false});
+    }
+    else{
+      Keyboard.dismiss();
+      const bodyWithPhoto = createFormData(Poster, body);
+      const url = "https://user-api-intern.herokuapp.com/movies";
+      fetch(url, {
+        method: 'POST',
+        body: bodyWithPhoto
+      })
+        .then(response => response.json())
+        .then(movie => {
+          this.setState({error: ''});
+          this.setState({isLoading: false});
+          this.props.navigation.navigate('Home');
+        })
+        .catch(err=> {
+            this.setState({error: 'Error ocurred while adding the list please try again!'});
+            this.setState({isLoading: false});
+        })
+    }
+    
   }
 
   render() {
-    const Img = this.state.photo? <Image source={{uri:this.state.photo.uri}}/> : null;
+    const Img = this.state.Poster? (<Image 
+      source={{uri:this.state.Poster.uri}}
+       style={{width: 100, height: 100, alignItems: 'center'}}/>) : null;
     return (
       <View style={styles.container}>
-          <Logo style={{marginVertical: 20}}/>
-          <Text style={{fontSize: 25, color: '#fff', marginVertical: 20}}>Add New Movie List</Text>
-          <View>
-            <TextInput style={styles.InputContainer}
+        <Logo style={{marginVertical: 20}}/>
+        <Error error={this.state.error}/>
+        <View>
+          <TextInput style={styles.InputContainer}
               placeholder='Title'
               placeholderTextColor='#fff'
               underlineColorAndroid='rgba(0,0,0,0)'
@@ -88,15 +125,17 @@ export class AddMovieList extends Component {
               underlineColorAndroid='rgba(0,0,0,0)'
               onChangeText = { (text) => this.setState({Type: text})}
               value={this.state.Type}
-              />
-              <TouchableOpacity style={styles.submitButton} onPress={this.choosePhoto}>
-                <Text style={styles.buttonText}>Select Poster</Text>
-              </TouchableOpacity>  
-              <TouchableOpacity style={styles.submitButton} onPress={this.addNewList} >
-                <Text style={styles.buttonText}>Add Movie</Text>
-              </TouchableOpacity>
-          </View>
-          {Img}
+              />  
+
+            <TouchableOpacity style={styles.submitButton} onPress={this.choosePhoto}>
+                <Text style={styles.buttonText}>Select Poster</Text> 
+            </TouchableOpacity> 
+                {Img}
+            <TouchableOpacity style={styles.submitButton} onPress={this.addNewList} >
+              <Text style={styles.buttonText}>Add Movie</Text>
+            </TouchableOpacity>
+        </View>
+        <RenderLoader isLoading={this.state.isLoading}/>     
       </View>
     )
   }
@@ -133,4 +172,13 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AddMovieList
+
+const mapStateToProps = state => ({
+  state 
+})
+
+const mapActionToProps = {
+  getMovieDetail: getMovie
+}
+
+export default connect(mapStateToProps, mapActionToProps)(AddMovieList);
