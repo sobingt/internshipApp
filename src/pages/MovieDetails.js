@@ -28,10 +28,10 @@ export class MovieDetails extends Component {
         <View style={styles.footer}>
             <View style={styles.reactionCount}>
                 <Text style={styles.reactionText}>
-                    likes
+                {movie.likes.length + ' '} likes
                 </Text>
                 <Text style={styles.reactionText}>
-                    comments
+                    {movie.comments.length + ' '} comments
                 </Text>
             </View>
             <View style={styles.addReaction}>

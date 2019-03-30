@@ -1,8 +1,13 @@
-import {FETCH_COMMENTS, ADD_COMMENT, CLEAR_COMMENT} from '../actions/types';
+import {
+    FETCH_COMMENTS, 
+    ADD_COMMENT, 
+    CLEAR_COMMENT, 
+    LIKE_COMMENT,
+    GET_COMMENT} from '../actions/types';
 
 const initialState = {
     comments: [],
-    likes: 0
+    comment: {}
 }
 
 export default (state = initialState, action) => {
@@ -12,7 +17,9 @@ export default (state = initialState, action) => {
         case ADD_COMMENT:
             return {...state, comments: [...state.comments, action.payload]}
         case CLEAR_COMMENT:
-            return {...state, comments: []}        
+            return {...state, comments: []} 
+        case GET_COMMENT:
+            return {...state, comment: action.payload}                   
         default:
             return state;    
     }

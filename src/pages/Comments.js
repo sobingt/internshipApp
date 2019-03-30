@@ -12,7 +12,11 @@ import {Icon} from 'react-native-elements';
 import CommentItem from '../components/CommentItem';
 
 import {connect} from 'react-redux';
-import {AddComment, getComments, clearComments, likeComment} from '../actions/commentActions';
+import {
+        AddComment,
+        getComments, 
+        clearComments, 
+        likeComment} from '../actions/commentActions';
  class Comments extends Component {
     constructor(props){
         super(props);
@@ -31,14 +35,6 @@ import {AddComment, getComments, clearComments, likeComment} from '../actions/co
                 this.props.AddComment({comment, id});
             }
         }
-
-        likeComment = (id) => {
-            const {navigation} = this.props;
-            const listId = navigation.getParam('id', [])
-            const liked = this.props.user.username;
-            const commentId = id;
-            this.props.likeComment({listId, commentId, liked: {liked}})
-        }
         componentDidMount = () => {
             const {navigation} = this.props;
             const id = navigation.getParam('id', '');
@@ -49,7 +45,8 @@ import {AddComment, getComments, clearComments, likeComment} from '../actions/co
             this.props.clearComments();
         }
   render() {
-      const {comments} = this.props;
+      const {comments, navigation} = this.props;
+      const listId = navigation.getParam('id', '');
     return (
      <View style={styles.container}>
          <View style={StyleSheet.header}>
@@ -59,7 +56,8 @@ import {AddComment, getComments, clearComments, likeComment} from '../actions/co
             data={comments}
             renderItem={({item}) => {
                 return(
-                    <CommentItem comment={item} like={this.likeComment} key={item._id}/>
+                    <CommentItem comment={item}
+                     listId={listId}/>
                 )    
             }}
             keyExtractor = { (item) => key = item._id}
@@ -120,4 +118,8 @@ const mapStatesToProps = state => ({
     user: state.user.user,
     comments: state.comment.comments
   })
-export default connect(mapStatesToProps, {AddComment, getComments, clearComments, likeComment})(Comments);
+const mapActionsToProps =   {
+    AddComment,
+    getComments,
+    clearComments};
+export default connect(mapStatesToProps,mapActionsToProps)(Comments);
