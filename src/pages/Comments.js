@@ -37,7 +37,7 @@ import {AddComment, getComments, clearComments, likeComment} from '../actions/co
             const listId = navigation.getParam('id', [])
             const liked = this.props.user.username;
             const commentId = id;
-            this.props.likeComment({listId, commentId, liked})
+            this.props.likeComment({listId, commentId, liked: {liked}})
         }
         componentDidMount = () => {
             const {navigation} = this.props;
@@ -59,7 +59,7 @@ import {AddComment, getComments, clearComments, likeComment} from '../actions/co
             data={comments}
             renderItem={({item}) => {
                 return(
-                    <CommentItem comment={item} like={this.likeComment}/>
+                    <CommentItem comment={item} like={this.likeComment} key={item._id}/>
                 )    
             }}
             keyExtractor = { (item) => key = item._id}

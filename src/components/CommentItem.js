@@ -19,7 +19,7 @@ import {
                 {comment.text}
             </Text>
         </View>
-        <TouchableOpacity onPress={this.props.like(comment._id)}>
+        <TouchableOpacity onPress={() => this.props.like(comment._id)}>
         <Text style={
             {textAlign:'right', marginRight: 20, fontSize: 16, color: '#000'}}>
             Like</Text>
