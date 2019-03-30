@@ -2,33 +2,23 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   Text, 
-  View, 
-  StatusBar,
+  View,
   TouchableOpacity,} from 'react-native';
 import Logo from '../components/Logo';
 import LoginForm from '../components/LoginForm';
 
 import {connect} from 'react-redux';
-import {userActions} from '../actions';
-
-
+import {loginAction} from '../actions/userActions';
 type Props = {};
 class Signin extends Component<Props> {
-  constructor(props){
-    super(props);
-    this.state = {
-      user: {}
-    }
-  }
   loginUser = (user) => {
-    this.setState({user: user})
-    this.props.navigation.navigate('Home', {user: this.state.user})
+    this.props.loginUser(user);
+    this.props.navigation.navigate('Home');
   }
+
   render() {
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#607D8B'
-          barStyle="light-content" />
         <Logo/>
         <LoginForm
          buttonText="Sign In"
@@ -70,11 +60,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStatesToProps = state => ({
-  state
+  user: state.user.user
 })
 
 const mapActionsToProps = {
-  addUser: userActions
+  loginUser: loginAction
 }
 
 export default connect(mapStatesToProps, mapActionsToProps)(Signin);

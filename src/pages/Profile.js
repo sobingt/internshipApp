@@ -8,12 +8,18 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {logoutAction} from '../actions/userActions';
+
 type Props = {};
 
 class Profile extends Component<Props>{
+  logoutUser = () => {
+    this.props.logoutUser()
+    this.props.navigation.navigate('SignIn')
+  }
   render() {
-    const { navigation } = this.props;
-    const user = navigation.getParam('user', 'noUser');
+    const user = this.props.user;
     return (
       <View style={styles.container}>
         <Image source={require('../images/user.jpeg')} style={styles.profileImage}/>
@@ -26,7 +32,7 @@ class Profile extends Component<Props>{
           <Text style={styles.textValue}>{user.email}</Text>
         </View>
         <TouchableOpacity style={styles.editButton}
-         onPress={() => this.props.navigation.navigate('SignIn')}>
+         onPress={this.logoutUser}>
           <Text style={styles.editText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
@@ -75,4 +81,12 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Profile
+const mapStatesToProps = state => ({
+  user: state.user.user
+})
+
+const mapActionsToProps = {
+  logoutUser: logoutAction
+}
+
+export default connect(mapStatesToProps, mapActionsToProps)(Profile);
