@@ -6,3 +6,4 @@ export const GET_MOVIE = 'get_movie';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const ADD_COMMENT = 'add_comment';
 export const CLEAR_COMMENT = 'clear_comment';
+export const LIKE_COMMENT = 'like_comment';

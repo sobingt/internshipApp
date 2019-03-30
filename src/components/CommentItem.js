@@ -3,6 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
+    TouchableOpacity
 }from 'react-native'
 
  class CommentItem extends Component {
@@ -18,9 +19,11 @@ import {
                 {comment.text}
             </Text>
         </View>
+        <TouchableOpacity onPress={this.props.like(comment._id)}>
         <Text style={
             {textAlign:'right', marginRight: 20, fontSize: 16, color: '#000'}}>
             Like</Text>
+        </TouchableOpacity>
     </View> 
     )
   }

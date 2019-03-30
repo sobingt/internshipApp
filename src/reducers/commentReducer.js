@@ -1,7 +1,8 @@
 import {FETCH_COMMENTS, ADD_COMMENT, CLEAR_COMMENT} from '../actions/types';
 
 const initialState = {
-    comments: []
+    comments: [],
+    likes: 0
 }
 
 export default (state = initialState, action) => {

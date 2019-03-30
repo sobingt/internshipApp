@@ -12,7 +12,7 @@ import {Icon} from 'react-native-elements';
 import CommentItem from '../components/CommentItem';
 
 import {connect} from 'react-redux';
-import {AddComment, getComments, clearComments} from '../actions/commentActions';
+import {AddComment, getComments, clearComments, likeComment} from '../actions/commentActions';
  class Comments extends Component {
     constructor(props){
         super(props);
@@ -30,6 +30,14 @@ import {AddComment, getComments, clearComments} from '../actions/commentActions'
                 const comment = {text: this.state.text, postedBy: username}
                 this.props.AddComment({comment, id});
             }
+        }
+
+        likeComment = (id) => {
+            const {navigation} = this.props;
+            const listId = navigation.getParam('id', [])
+            const liked = this.props.user.username;
+            const commentId = id;
+            this.props.likeComment({listId, commentId, liked})
         }
         componentDidMount = () => {
             const {navigation} = this.props;
@@ -51,7 +59,7 @@ import {AddComment, getComments, clearComments} from '../actions/commentActions'
             data={comments}
             renderItem={({item}) => {
                 return(
-                    <CommentItem comment={item}/>
+                    <CommentItem comment={item} like={this.likeComment}/>
                 )    
             }}
             keyExtractor = { (item) => key = item._id}
@@ -112,4 +120,4 @@ const mapStatesToProps = state => ({
     user: state.user.user,
     comments: state.comment.comments
   })
-export default connect(mapStatesToProps, {AddComment, getComments, clearComments})(Comments);
+export default connect(mapStatesToProps, {AddComment, getComments, clearComments, likeComment})(Comments);
