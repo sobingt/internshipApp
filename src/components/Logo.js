@@ -3,7 +3,8 @@ import {
   View,
   Image,
   StyleSheet,
-  Text
+  Text,
+  StatusBar,
 } from 'react-native';
 
 type Props = {};
@@ -11,8 +12,9 @@ export class Logo extends Component<Props> {
   render() {
     return (
       <View style={styles.logoContainer}>
+        <StatusBar backgroundColor='#607D8B'
+        barStyle="light-content" />
         <Image source={require('../images/logo.png')} style={styles.logoImage}/>
-        <Text style={styles.logoText}>Movie Listing App</Text>
       </View>
     )
   }
