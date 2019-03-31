@@ -6,7 +6,9 @@ import{
     TouchableOpacity,
     TextInput,
     FlatList,
-    Keyboard
+    Keyboard,
+    Image,
+    ScrollView
 }from 'react-native'
 import {Icon} from 'react-native-elements';
 import  { Facebook } from 'react-content-loader'
@@ -19,12 +21,32 @@ import {
         getComments, 
         clearComments, 
         likeComment} from '../actions/commentActions';
+import ImagePicker from 'react-native-image-picker';     
+
+class RenderImage extends Component{
+    render(){
+        if(this.props.image){
+            return(
+                <ScrollView>
+                    <Image source={{uri: this.props.image.uri}}
+                    style={{width: 100, height: 100, alignItems: 'center'}}/> 
+                </ScrollView>
+            )
+        }
+        else{
+            return null;
+        }
+        
+    }
+}
+
  class Comments extends Component {
     constructor(props){
         super(props);
         this.state = {
             text: '',
-            isLoading: true
+            isLoading: true,
+            image: null
         }
     }    
         addComment = () => {
@@ -38,6 +60,17 @@ import {
                 this.props.AddComment({comment, id});
             }
         }
+        choosePhoto = () => {
+            const options = {
+              noData: true,
+            }
+            ImagePicker.launchImageLibrary(options, (response) => {
+                  this.setState({
+                    image: response
+                  });
+            })
+          }
+
         componentDidMount = () => {
             const {navigation} = this.props;
             const id = navigation.getParam('id', '');
@@ -64,9 +97,9 @@ import {
             }}
             keyExtractor = { (item) => key = item._id}
          />
-
+          <RenderImage image={this.state.image}/> 
          <View style={styles.footer}>
-             <TouchableOpacity style={{marginRight: 10}}>
+             <TouchableOpacity style={{marginRight: 10}} onPress={this.choosePhoto}>
                 <Icon name='camera' type='ionicons' color='#000'/>
              </TouchableOpacity>
              <TextInput style={styles.commentBox}
@@ -92,7 +125,6 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 20,
-        marginBottom: 55,
     },
     footer: {
         borderTopWidth: 1,
