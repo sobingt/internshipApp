@@ -9,6 +9,8 @@ import{
     Keyboard
 }from 'react-native'
 import {Icon} from 'react-native-elements';
+import  { Facebook } from 'react-content-loader'
+
 import CommentItem from '../components/CommentItem';
 
 import {connect} from 'react-redux';
@@ -22,6 +24,7 @@ import {
         super(props);
         this.state = {
             text: '',
+            isLoading: true
         }
     }    
         addComment = () => {
@@ -50,7 +53,6 @@ import {
     return (
      <View style={styles.container}>
          <View style={StyleSheet.header}>
-
          </View>
          <FlatList style={styles.content}
             data={comments}
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 20,
-        marginBottom: 40,
+        marginBottom: 55,
     },
     footer: {
         borderTopWidth: 1,
